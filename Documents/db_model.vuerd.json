@@ -3,8 +3,8 @@
     "version": "2.2.11",
     "width": 2000,
     "height": 2000,
-    "scrollTop": -220.30074477121624,
-    "scrollLeft": -152.63157402237854,
+    "scrollTop": -198.64661101380756,
+    "scrollLeft": -83.73205752153221,
     "zoomLevel": 0.8,
     "show": {
       "tableComment": true,
@@ -212,7 +212,7 @@
           "active": false,
           "left": 46.6163,
           "top": 63.1575,
-          "zIndex": 310,
+          "zIndex": 2,
           "widthName": 60,
           "widthComment": 60
         },
@@ -343,7 +343,7 @@
           "active": false,
           "left": 521.8048,
           "top": 72.9319,
-          "zIndex": 324,
+          "zIndex": 10,
           "widthName": 60,
           "widthComment": 60
         },
@@ -405,7 +405,7 @@
           "active": false,
           "left": 538.3461,
           "top": 424.062,
-          "zIndex": 307,
+          "zIndex": 1,
           "widthName": 72.55091857910156,
           "widthComment": 60
         },
@@ -536,7 +536,7 @@
           "active": false,
           "left": 56.4753,
           "top": 348.6848,
-          "zIndex": 328,
+          "zIndex": 6,
           "widthName": 60,
           "widthComment": 60
         },
@@ -572,7 +572,7 @@
           },
           {
             "name": "url",
-            "comment": "",
+            "comment": "unique",
             "dataType": "VARCHAR",
             "default": "",
             "option": {
@@ -598,7 +598,7 @@
           "active": false,
           "left": 56.6203,
           "top": 691.1446,
-          "zIndex": 329,
+          "zIndex": 8,
           "widthName": 60,
           "widthComment": 60
         },
