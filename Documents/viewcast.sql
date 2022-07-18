@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Jul 16, 2022 at 05:11 PM
+-- Generation Time: Jul 18, 2022 at 04:41 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.3.21
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `flux` (
   `url` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `url` (`url`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -46,8 +46,12 @@ CREATE TABLE IF NOT EXISTS `flux_data` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `position` tinyint(3) UNSIGNED NOT NULL,
   `time` tinyint(3) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `id_flux` bigint(20) UNSIGNED NOT NULL,
+  `id_media` bigint(20) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `flux_exist` (`id_flux`),
+  KEY `media_exist` (`id_media`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -60,8 +64,12 @@ CREATE TABLE IF NOT EXISTS `medias` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(15) NOT NULL,
   `path` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `id_users` bigint(20) UNSIGNED NOT NULL,
+  `id_media_type` tinyint(3) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_exist` (`id_users`),
+  KEY `media_type_exist` (`id_media_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -75,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `media_type` (
   `type` varchar(5) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `type` (`type`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -94,7 +102,25 @@ CREATE TABLE IF NOT EXISTS `users` (
   `is_admin` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`,`mail`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `flux_data`
+--
+ALTER TABLE `flux_data`
+  ADD CONSTRAINT `flux_exist` FOREIGN KEY (`id_flux`) REFERENCES `flux` (`id`),
+  ADD CONSTRAINT `media_exist` FOREIGN KEY (`id_media`) REFERENCES `medias` (`id`);
+
+--
+-- Constraints for table `medias`
+--
+ALTER TABLE `medias`
+  ADD CONSTRAINT `media_type_exist` FOREIGN KEY (`id_media_type`) REFERENCES `media_type` (`id`),
+  ADD CONSTRAINT `user_exist` FOREIGN KEY (`id_users`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
