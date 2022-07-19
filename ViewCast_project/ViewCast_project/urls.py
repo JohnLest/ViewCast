@@ -19,7 +19,7 @@ from .views import views
 
 urlpatterns = [
     path("", views.hello),
-    path("login/", views.hello),
+    path("login/", views.login),
     path("workstation/", views.hello),
     path("flux/", views.hello),
     path("adminstation/", views.hello),
