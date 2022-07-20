@@ -1,6 +1,6 @@
 # PyCharm module
-/ViewCast_project/.idea/
-/ViewCast_project/venv/
+/ViewCast/.idea/
+/ViewCast/venv/
 
 
 ViewCast_project/db.sqlite3
