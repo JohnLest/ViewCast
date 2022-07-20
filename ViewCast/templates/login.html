@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+    - Login
+{% endblock %}
+
+{% block content %}
+
+    <h1>Viewcast</h1>
+
+    <p>Login</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <img src="../static/resources/logo.png">
+            </div>
+            <form class="col-6" action="" method="post" style="background-color: #004b8e;">
+                {{ form.email.label }} {{ form.email }} <br>
+                {{ form.psw.label }} {{ form.psw }} <br>
+                <input type="submit" value="Connexion"/>
+                <span class="psw"><a href="#">J'ai oublié mon mot de passe</a></span>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
