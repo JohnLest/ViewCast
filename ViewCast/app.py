@@ -1,5 +1,5 @@
 from flask import Flask
-from views.views import  route as view
+from views.app.views import  route as view
 
 
 app = Flask(__name__)
