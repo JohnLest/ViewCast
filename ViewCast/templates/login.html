@@ -14,10 +14,10 @@
             <div class="col-6">
                 <img src="../static/resources/logo.png">
             </div>
-            <form class="col-6" action="" method="post" style="background-color: #004b8e;">
+            <form class="col-6" action="/login" method="post" style="background-color: #004b8e;">
                 {{ form.email.label }} {{ form.email }} <br>
                 {{ form.psw.label }} {{ form.psw }} <br>
-                <input type="submit" value="Connexion"/>
+                {{ form.submit }}
                 <span class="psw"><a href="#">J'ai oublié mon mot de passe</a></span>
             </form>
         </div>
