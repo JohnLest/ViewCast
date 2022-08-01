@@ -1,10 +1,10 @@
 .header-workstation {
     background-color: #043C66;
-    height: 150px;
+    height: 100%;
 }
 
-.logout{
-    background-color:#0073C9;
+.logout {
+    background-color: #0073C9;
     padding: 10px 50px;
     font-size: 15px;
     cursor: pointer;
@@ -12,31 +12,55 @@
     border: #0073C9;
     color: white;
 }
-.logout:hover{
+
+.logout:hover {
     background-color: #E7F2F7;
     color: black;
 }
-#bottomcontainer{
-    background-color:#E7F2F7;
-    padding: 80px 100px;
-    border-style: solid;
-    border-color: #0073C9;
-    border-width: 2px;
-    font-family:Montserrat Regular, Arial, Helvetica, sans-serif;
+
+.split {
+    height: 65%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 10%;
+    overflow-x: hidden;
+    padding-top: 20px;
 }
-#leftcontainer{
-    background-color:#E7F2F7;
-    padding: 200px 200px;
-    border-style: solid;
-    border-color: #0073C9;
-    border-width: 2px;
-    font-family:Montserrat Regular, Arial, Helvetica, sans-serif;
-}
-#rightcontainer{
+
+.left-container {
+    left: 0;
+    overflow-y: auto;
     background-color: #E7F2F7;
     border-style: solid;
-    padding: 200px 200px;
     border-color: #0073C9;
     border-width: 2px;
-    font-family:Montserrat Regular, Arial, Helvetica, sans-serif;
+    font-family: Montserrat Regular, Arial, Helvetica, sans-serif;
+}
+
+.right-container {
+    right: 0;
+    overflow-y: auto;
+    background-color: #E7F2F7;
+    border-style: solid;
+    border-color: #0073C9;
+    border-width: 2px;
+    font-family: Montserrat Regular, Arial, Helvetica, sans-serif;
+}
+
+.bottom-container {
+    left: 0;
+    height: 25%;
+    width: 100%;
+    position: fixed;
+    top: 75%;
+    z-index: 1;
+    padding-top: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #E7F2F7;
+    border-style: solid;
+    border-color: #0073C9;
+    border-width: 2px;
+    font-family: Montserrat Regular, Arial, Helvetica, sans-serif;
 }
