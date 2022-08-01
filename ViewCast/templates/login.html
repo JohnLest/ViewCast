@@ -1,26 +1,23 @@
 {% extends "base.html" %}
-
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/login.css") }}" />
+{% endblock %}
 {% block title %}
     - Login
 {% endblock %}
 
 {% block content %}
-
-    <h1>Viewcast</h1>
-
-    <p>Login</p>
-    <div class="container">
-        <div class="row">
-            <div class="col-6">
-                <img src="../static/resources/logo.png">
-            </div>
-            <form class="col-6" action="/login" method="post" style="background-color: #004b8e;">
-                {{ form.email.label }} {{ form.email }} <br>
-                {{ form.psw.label }} {{ form.psw }} <br>
-                {{ form.submit }}
-                <span class="psw"><a href="#">J'ai oublié mon mot de passe</a></span>
-            </form>
-        </div>
+<form action="/login" method="post">
+    <div class="container-index">
+        <b>{{ form.email.label }}</b>
+        {{ form.email }}
+        <br>
+        <br>
+        <b>{{ form.psw.label }}</b>
+        {{ form.psw }}
+        <br>
+        <br>
+        {{ form.submit }}
     </div>
-
+</form>
 {% endblock %}

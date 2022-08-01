@@ -1,0 +1,42 @@
+.header-workstation {
+    background-color: #043C66;
+    height: 150px;
+}
+
+.logout{
+    background-color:#0073C9;
+    padding: 10px 50px;
+    font-size: 15px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    border: #0073C9;
+    color: white;
+}
+.logout:hover{
+    background-color: #E7F2F7;
+    color: black;
+}
+#bottomcontainer{
+    background-color:#E7F2F7;
+    padding: 80px 100px;
+    border-style: solid;
+    border-color: #0073C9;
+    border-width: 2px;
+    font-family:Montserrat Regular, Arial, Helvetica, sans-serif;
+}
+#leftcontainer{
+    background-color:#E7F2F7;
+    padding: 200px 200px;
+    border-style: solid;
+    border-color: #0073C9;
+    border-width: 2px;
+    font-family:Montserrat Regular, Arial, Helvetica, sans-serif;
+}
+#rightcontainer{
+    background-color: #E7F2F7;
+    border-style: solid;
+    padding: 200px 200px;
+    border-color: #0073C9;
+    border-width: 2px;
+    font-family:Montserrat Regular, Arial, Helvetica, sans-serif;
+}

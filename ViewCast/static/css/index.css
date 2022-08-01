@@ -1,0 +1,22 @@
+#login{
+    background-color:#043C66;
+    padding: 28px 350px;
+    font-size: 25px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    color: white;
+}
+#login:hover{
+    background-color: #0073C9;
+}
+#subscribe{
+    background-color: #043C66;
+    padding: 28px 350px;
+    font-size: 25px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    color: white;
+}
+#subscribe:hover{
+    background-color: #0073C9;
+}

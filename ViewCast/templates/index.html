@@ -1,7 +1,16 @@
 {% extends "base.html" %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/index.css") }}" />
+{% endblock %}
 {% block content %}
-
-    <h1>Viewcast</h1>
+    <nav class="menu">
+    <form class="home-login" action="/" method="post">
+        {{ form.login }}
+        <br>
+        <br>
+        {{ form.subscribe }}
+    </form>
+    </nav>
 
     <p>Work in progress</p>
 

@@ -2,11 +2,19 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}" />
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/base.css") }}" />
     <link rel="stylesheet" href="{{ url_for("static", filename="bootstrap/css/bootstrap.min.css") }}" />
+    {% block stylesheet %}{% endblock %}
     <title>Viewcast {% block title %}{% endblock %}</title>
 </head>
 <body>
+    {% block header %}
+    <header class="header-main">
+        <p>
+            <img src="{{ url_for("static", filename="resources/viewcast_white.png") }}" style="height:90px; margin-top: 25px;"/>
+        </p>
+    </header>
+    {% endblock %}
     {% block content %}
     {% endblock %}
 </body>
