@@ -6,10 +6,12 @@ from views.views.form.indexForm import IndexForm
 from views.views.form.workstationForm import WorkstationForm
 
 from ..services.usersService import UsersService
+from ..services.mediaService import MediaService
 
 app = Blueprint("views", __name__, )
 users_service = UsersService()
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+media_service = MediaService()
+ALLOWED_EXTENSIONS = media_service.get_media_type()
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -44,30 +46,14 @@ def workstation():
         if media and allowed_file(media.filename):
             filename = secure_filename(media.filename)
             media.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+            media_service.new_media(media.filename, filename.rsplit('.', 1)[1].lower(), 1)
+
+
 
     return render_template("workstation.html", form=form)
-
 
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/a/', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        # If the user does not select a file, the browser submits an
-        # empty file without a filename.
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('download_file', name=filename))
-    return None

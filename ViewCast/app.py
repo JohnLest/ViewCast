@@ -1,7 +1,7 @@
 from flask import Flask
 from views.views.views import app as route
 
-UPLOAD_FOLDER = 'C://Media'
+UPLOAD_FOLDER = 'C://media/john'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'C2HWGVoMGfNTBsrYQg8EcMrdTimkZfAb'

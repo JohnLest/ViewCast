@@ -63,7 +63,6 @@ DROP TABLE IF EXISTS `medias`;
 CREATE TABLE IF NOT EXISTS `medias` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(15) NOT NULL,
-  `path` varchar(255) NOT NULL,
   `id_users` bigint(20) UNSIGNED NOT NULL,
   `id_media_type` tinyint(3) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
@@ -85,6 +84,16 @@ CREATE TABLE IF NOT EXISTS `media_type` (
   UNIQUE KEY `type` (`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `media_type`
+--
+
+INSERT INTO `media_type` (`id`, `type`) VALUES
+(4, 'gif'),
+(3, 'jpeg'),
+(2, 'jpg'),
+(1, 'png');
+
 -- --------------------------------------------------------
 
 --
@@ -100,8 +109,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   `company` varchar(25) NOT NULL,
   `location` varchar(25) DEFAULT NULL,
   `is_admin` tinyint(1) NOT NULL DEFAULT 0,
+  `path_media` varchar(25) NOT NULL
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`,`mail`)
+  UNIQUE KEY `name` (`name`),
+  UNIQUE KEY `mail` (`mail`),
+  UNIQUE KEY `path_media` (`path_media`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
