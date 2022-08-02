@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block stylesheet %}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/workstation.js") }}"></script>
     <link rel="stylesheet" href="{{ url_for("static", filename="css/workstation.css") }}"/>
 {% endblock %}
 {% block title %}
@@ -26,19 +27,31 @@
     </header>
 {% endblock %}
 {% block content %}
-    <div class="split right-container">
-        <h2>right-container</h2>
-         <!-- TODO doucle pour chaque media  -->
-    </div>
-
     <div class="split left-container">
         <h2>left-container</h2>
-         <!-- TODO doucle pour chaque difusion  -->
+        <button class="icon-add" style="font-size: 32px;" onclick="openForm()">
+            <i class="fa-solid fa-circle-plus icon-add"></i>
+        </button>
+        <!-- TODO doucle pour chaque media  -->
+
+        <div class="split right-container">
+            <h2>right-container</h2>
+            <!-- TODO doucle pour chaque difusion  -->
+        </div>
 
     </div>
     <div class="bottom-container">
         <h2>bottom-container</h2>
         <!-- TODO doucle pour chaque media  -->
+    </div>
+
+    <div class="form-popup" id="myForm">
+        <form class="form-container" method="post" enctype=multipart/form-data>
+            <p>{{ form.media }}</p>
+            <p>{{ form.upload }}
+                <button type="button" class="cancel" onclick="closeForm()">Close</button>
+            </p>
+        </form>
     </div>
 
 {% endblock %}

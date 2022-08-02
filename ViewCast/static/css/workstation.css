@@ -64,3 +64,35 @@
     border-width: 2px;
     font-family: Montserrat Regular, Arial, Helvetica, sans-serif;
 }
+
+.icon-add {
+    position: fixed;
+    top: 69%;
+    right: 52%;
+    width: 32px;
+    height: 32px;
+    border: none;
+}
+
+.form-popup {
+    display: none;
+    position: absolute;
+    bottom: 32%;
+    right: 52%;
+    border-style: solid;
+    border-color: #0073C9;
+    border-width: 2px;
+    z-index: 9;
+}
+
+.form-container {
+    max-width: 300px;
+    padding: 10px;
+}
+
+.cancel{
+    position: fixed;
+    background-color: #0073C9;
+    color: white;
+    right: 55%;
+}
