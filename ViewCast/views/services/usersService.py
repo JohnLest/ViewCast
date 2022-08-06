@@ -6,7 +6,7 @@ from models.models.usersModel import UsersModel
 
 
 class UsersService:
-    def __init__(self):
+    def __init__(self, app):
         _session = Session()
         self.users_repo = UsersRepo(_session, User)
 

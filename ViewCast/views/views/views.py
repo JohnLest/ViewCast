@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, redirect, request, flash, url_for, current_app
+from flask import Blueprint, render_template, redirect, request, current_app, session
+
 from werkzeug.utils import secure_filename
 import os
 from views.views.form.loginForm import LoginForm
@@ -9,8 +10,8 @@ from ..services.usersService import UsersService
 from ..services.mediaService import MediaService
 
 app = Blueprint("views", __name__, )
-users_service = UsersService()
-media_service = MediaService()
+users_service = UsersService(current_app)
+media_service = MediaService(current_app)
 ALLOWED_EXTENSIONS = media_service.get_media_type()
 if len(ALLOWED_EXTENSIONS) < 1:
     current_app.logger.warning(f"No media extension find")
@@ -33,12 +34,19 @@ def login():
         if user is None:
             current_app.logger.warning(f"Error connection with {form.email.data.lower()}")
             return render_template("login.html", form=form)
+        session["name"] = user.name
+        session["id_user"] = user.id_user
         return redirect("/workstation/")
     return render_template("login.html", form=form)
 
 
 @app.route('/workstation/', methods=['GET', 'POST'])
 def workstation():
+    if not session.get("name"):
+        current_app.logger.warning(f"User not connected")
+        return redirect("/login/")
+    if len(media_service.get_list_medias_name_by_id_user(session.get("id_user"))) < 1:
+        current_app.logger.warning(f"No Media")
     form = WorkstationForm()
     if request.method == 'POST':
         current_app.logger.info(f"Add media")
@@ -46,14 +54,15 @@ def workstation():
             return redirect(request.url)
         media = request.files['media']
         if media.filename == '':
-            flash('No selected file')
             return redirect(request.url)
         if media and allowed_file(media.filename):
             filename = secure_filename(media.filename)
             media.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-            media_service.new_media(media.filename, filename.rsplit('.', 1)[1].lower(), 1)
+            _new_media = media_service.new_media(media.filename, filename.rsplit('.', 1)[1].lower(), 1)
+            if _new_media is None:
+                current_app.logger.warning(f"Error update with {filename}")
 
-    return render_template("workstation.html", form=form)
+    return render_template("workstation.html", form=form, name=session.get("name"))
 
 
 def allowed_file(filename):

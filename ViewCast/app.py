@@ -1,4 +1,6 @@
 from flask import Flask
+from flask_session import Session
+
 from logging.config import dictConfig
 from views.views.views import app as route
 
@@ -23,7 +25,9 @@ dictConfig({
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'C2HWGVoMGfNTBsrYQg8EcMrdTimkZfAb'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config["SESSION_TYPE"] = "filesystem"
 
+Session(app=app)
 app.register_blueprint(route)
 
 

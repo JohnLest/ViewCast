@@ -10,8 +10,9 @@ from models.models.mediaTypeModel import MediaTypeModel
 
 
 class MediaService:
-    def __init__(self):
+    def __init__(self, app):
         _session = Session()
+        self.app = app
         self.medias_repo = MediaRepo(_session, Medias)
         self.media_type_repo = MediaTypeRepo(_session, MediaType)
 
@@ -23,7 +24,8 @@ class MediaService:
             for _media in _media_type:
                 model = MediaTypeModel.from_orm(_media)
                 result.append(model.type)
-        except:
+        except Exception as ex:
+            self.app.logger.error(f"Exception in get_media_type: {ex.args[0]}")
             result = []
             self.media_type_repo.session.rollback()
         self.media_type_repo.session.close()
@@ -38,7 +40,23 @@ class MediaService:
                                        id_users=id_user,
                                        id_media_type=id_type)
             result = MediasModel.from_orm(self.medias_repo.insert(new_media))
-        except:
+        except Exception as ex:
+            self.app.logger.error(f"Exception in new_media(): {ex.args[0]}")
+            self.medias_repo.session.rollback()
+        self.medias_repo.session.close()
+        return result
+
+    def get_list_medias_name_by_id_user(self, id_user) -> list[str]:
+        self.medias_repo.session = Session()
+        result = []
+        try:
+            all_media = self.medias_repo.get_all_filter(Medias.id_users == id_user)
+            for _media in all_media:
+                media_model = MediasModel.from_orm(_media)
+                result.append(media_model.name)
+        except Exception as ex:
+            self.app.logger.error(f"Exception in get_list_medias_name_by_id_user(): {ex.args[0]}")
+            result = []
             self.medias_repo.session.rollback()
         self.medias_repo.session.close()
         return result
