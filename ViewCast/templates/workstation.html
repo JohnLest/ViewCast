@@ -28,34 +28,49 @@
 {% endblock %}
 {% block content %}
     <div class="split left-container">
-        <h2>left-container</h2>
+        <h2>Library Medias</h2>
         <table>
-        {% for row in table %}
-            <tr>
-            {% for cell in row %}
-                <td><img id="{{ cell.rsplit('.')[0].lower() }}" src="{{ url_for("static", filename="medias/john/" + cell) }}" height="100px" draggable="true" ondragstart="drag(event)"> </td>
+            {% for row in table %}
+                <tr>
+                    {% for cell in row %}
+                        <td><img id="{{ cell.rsplit('.')[0].lower() }}"
+                                 src="{{ url_for("static", filename="medias/john/" + cell) }}" height="100px"
+                                 draggable="true" ondragstart="drag(event)"><br>
+                            {{ cell }}
+                        </td>
+
+                    {% endfor %}
+                </tr>
             {% endfor %}
-            </tr>
-        {% endfor %}
         </table>
-        <button class="icon-add" style="font-size: 32px;" onclick="openForm()">
+        <button class="icon icon-add" style="font-size: 32px;" onclick="openForm()">
             <i class="fa-solid fa-circle-plus icon-add"></i>
         </button>
-
-        <div class="split right-container">
-            <h2>right-container</h2>
-            <!-- TODO doucle pour chaque difusion  -->
-        </div>
-
+    </div>
+    <div class="split right-container">
+        <h2>right-container</h2>
+        <!-- TODO doucle pour chaque difusion  -->
     </div>
     <div class="bottom-container">
-        <h2>bottom-container</h2>
-        <!-- TODO doucle pour chaque media  -->
-        <table>
-            <tr id="myRow"  ondragover="allowDrop(event)" ondrop="drop(event)">
-              <td > </td>
-            </tr>
-          </table><br>
+        <h2>Workstation</h2>
+        <form class="new-flux" method="post">
+            <table>
+                <tr id="time-line-img">
+                    <td id="next-img" ondragover="allowDrop(event)" ondrop="drop(event)">
+                    </td>
+                </tr>
+                <tr id="time-line-input">
+                    <td class="time-line-input">
+                        <input type="hidden" id="next-in-hide" name="next-in-hide" value="">
+                        <input type="number" id="next-in-txt" name="next-in-txt">
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <button class="icon icon-check" style="font-size: 32px;" type="submit">
+                <i class="fa-solid fa-circle-check"></i>
+            </button>
+        </form>
     </div>
 
     <div class="form-popup" id="myForm">

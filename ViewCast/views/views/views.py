@@ -50,6 +50,7 @@ def workstation():
     form = WorkstationForm()
     if request.method == 'POST':
         current_app.logger.info(f"Add media")
+
         if 'media' not in request.files:
             return redirect(request.url)
         media = request.files['media']
@@ -62,7 +63,7 @@ def workstation():
             if _new_media is None:
                 current_app.logger.warning(f"Error update with {filename}")
     lst_media = media_service.get_list_medias_name_by_id_user(session.get("id_user"))
-    matrice_media = [lst_media[_media:_media + 5] for _media in range(0, len(lst_media), 5)]
+    matrice_media = [lst_media[_media:_media + 3] for _media in range(0, len(lst_media), 3)]
     if len(lst_media) < 0:
         current_app.logger.warning(f"No Media")
     return render_template("workstation.html", form=form, name=session.get("name"), table=matrice_media)

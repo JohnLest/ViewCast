@@ -19,7 +19,7 @@
 }
 
 .split {
-    height: 65%;
+    height: 50%;
     width: 50%;
     position: fixed;
     z-index: 1;
@@ -35,6 +35,7 @@
     border-style: solid;
     border-color: #0073C9;
     border-width: 2px;
+    text-align: center;
     font-family: Montserrat Regular, Arial, Helvetica, sans-serif;
 }
 
@@ -50,10 +51,10 @@
 
 .bottom-container {
     left: 0;
-    height: 25%;
+    height: 50%;
     width: 100%;
     position: fixed;
-    top: 75%;
+    top: 60%;
     z-index: 1;
     padding-top: 20px;
     overflow-y: auto;
@@ -65,24 +66,37 @@
     font-family: Montserrat Regular, Arial, Helvetica, sans-serif;
 }
 
-.icon-add {
-    position: fixed;
-    top: 69%;
-    right: 52%;
+.icon{
     width: 32px;
     height: 32px;
     border: none;
+    color: #0073C9;
 }
+
+.icon-add {
+    position: fixed;
+    top: 54%;
+    right: 52%;
+}
+
+.icon-check{
+    position: fixed;
+    bottom :2%;
+    right: 2%;
+}
+
+
 
 .form-popup {
     display: none;
     position: absolute;
-    bottom: 32%;
+    bottom: 41%;
     right: 52%;
     border-style: solid;
     border-color: #0073C9;
     border-width: 2px;
     z-index: 9;
+    background-color: #E7F2F7;
 }
 
 .form-container {
@@ -97,8 +111,13 @@
     right: 55%;
 }
 
+
 td {
     border: 1px solid #0073C9;
     height: 150px;
     width: 200px;
+    text-align: center;
+}
+td.time-line-input{
+    height: 50px;
 }
