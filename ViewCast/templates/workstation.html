@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block stylesheet %}
-    <script type="text/javascript" src="{{ url_for("static", filename="js/workstation.js") }}"></script>
     <link rel="stylesheet" href="{{ url_for("static", filename="css/workstation.css") }}"/>
+    <script type="text/javascript" src="{{ url_for("static", filename="js/workstation.js") }}"></script>
 {% endblock %}
 {% block title %}
     - Workstation - {{ name }}
@@ -29,10 +29,18 @@
 {% block content %}
     <div class="split left-container">
         <h2>left-container</h2>
+        <table>
+        {% for row in table %}
+            <tr>
+            {% for cell in row %}
+                <td><img id="{{ cell.rsplit('.')[0].lower() }}" src="{{ url_for("static", filename="medias/john/" + cell) }}" height="100px" draggable="true" ondragstart="drag(event)"> </td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+        </table>
         <button class="icon-add" style="font-size: 32px;" onclick="openForm()">
             <i class="fa-solid fa-circle-plus icon-add"></i>
         </button>
-        <!-- TODO doucle pour chaque media  -->
 
         <div class="split right-container">
             <h2>right-container</h2>
@@ -43,6 +51,11 @@
     <div class="bottom-container">
         <h2>bottom-container</h2>
         <!-- TODO doucle pour chaque media  -->
+        <table>
+            <tr id="myRow"  ondragover="allowDrop(event)" ondrop="drop(event)">
+              <td > </td>
+            </tr>
+          </table><br>
     </div>
 
     <div class="form-popup" id="myForm">

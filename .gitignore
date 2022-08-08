@@ -7,3 +7,6 @@ ViewCast_project/db.sqlite3
 
 # __pycache__
 *.pyc
+
+# resources
+/ViewCast/static/medias/*

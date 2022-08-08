@@ -57,7 +57,7 @@
     z-index: 1;
     padding-top: 20px;
     overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: auto;
     background-color: #E7F2F7;
     border-style: solid;
     border-color: #0073C9;
@@ -90,9 +90,15 @@
     padding: 10px;
 }
 
-.cancel{
+.cancel {
     position: fixed;
     background-color: #0073C9;
     color: white;
     right: 55%;
+}
+
+td {
+    border: 1px solid #0073C9;
+    height: 150px;
+    width: 200px;
 }
