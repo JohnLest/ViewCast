@@ -8,6 +8,9 @@ from models.repos.fluxRepo import FluxRepo
 from models.database.fluxData import FluxData
 from models.models.fluxDataModel import FluxDataModel
 from models.repos.fluxDataRepo import FluxDataRepo
+from models.database.v_flux import VFlux
+from models.repos.v_fluxRepo import VFluxRepo
+from models.models.v_fluxModel import VFluxModel
 
 class FluxService:
     def __init__(self, app):
@@ -15,6 +18,7 @@ class FluxService:
         self.app = app
         self.flux_repo = FluxRepo(_session, Flux)
         self.flux_data_repo = FluxDataRepo(_session, FluxData)
+        self.v_flux_repo= VFluxRepo(_session, VFlux)
 
     def create_new_flux(self, flux_data):
         self.flux_repo.session = Session()
@@ -39,3 +43,19 @@ class FluxService:
             self.flux_repo.session.rollback()
         self.flux_repo.session.close()
         self.flux_data_repo.session.close()
+
+    def get_flux_by_url(self, url):
+        self.v_flux_repo.session = Session()
+        result = []
+        try:
+            v_flux: list[VFlux] = self.v_flux_repo.get_all_filter(VFlux.url == url)
+            for _v_flux in v_flux:
+                v_flux_model: VFluxModel = VFluxModel.from_orm(_v_flux)
+                result.append(v_flux_model)
+
+        except Exception as ex:
+            self.app.logger.error(f"Exception in get_flux_by_url(): {ex.args[0]}")
+            result = []
+            self.flux_repo.session.rollback()
+        self.v_flux_repo.session.close()
+        return result

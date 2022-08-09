@@ -5,6 +5,7 @@ import os
 from views.views.form.loginForm import LoginForm
 from views.views.form.indexForm import IndexForm
 from views.views.form.workstationForm import WorkstationForm
+from views.views.form.login_fluxForm import LoginFluxForm
 
 from ..services.usersService import UsersService
 from ..services.mediaService import MediaService
@@ -27,6 +28,8 @@ def index():
     if request.method == "POST":
         if request.form.get("login"):
             return redirect("/login/")
+        if request.form.get("watch"):
+            return redirect('/watch/')
     return render_template("index.html", form=form)
 
 
@@ -61,6 +64,24 @@ def workstation():
     if len(lst_media) < 0:
         current_app.logger.warning(f"No Media")
     return render_template("workstation.html", form=form, name=session.get("name"), table=matrice_media)
+
+
+@app.route('/watch/', methods=['GET', 'POST'])
+def watch():
+    if not session.get("code"):
+        form = LoginFluxForm()
+        if request.method == "POST":
+            user = users_service.connect(form.email.data.lower(), form.psw.data)
+            if user is None:
+                current_app.logger.warning(f"Error connection with {form.email.data.lower()}")
+                return render_template("login_flux.html", form=form)
+            session["name"] = user.name
+            session["id_user"] = user.id_user
+            session["code"] = form.code.data
+        else:
+            return render_template("login_flux.html", form=form)
+    flux = flux_service.get_flux_by_url(session.get("code"))
+    return render_template("flux.html", flux=flux)
 
 
 # endregion

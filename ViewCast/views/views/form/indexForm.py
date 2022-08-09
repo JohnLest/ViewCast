@@ -5,4 +5,5 @@ from wtforms import SubmitField
 class IndexForm(FlaskForm):
     login = SubmitField("Login")
     subscribe = SubmitField("Subscribe")
+    watch = SubmitField("Broadcast")
 

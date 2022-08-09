@@ -3,11 +3,3 @@
     height: 150px;
     text-align: center;
 }
-
-.menu {
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 25%;
-    font-family: Montserrat Regular, Arial, Helvetica, sans-serif;
-}
