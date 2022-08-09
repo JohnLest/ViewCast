@@ -33,12 +33,13 @@
             {% for row in table %}
                 <tr>
                     {% for cell in row %}
-                        <td><img id="{{ cell.rsplit('.')[0].lower() }}"
-                                 src="{{ url_for("static", filename="medias/john/" + cell) }}" height="100px"
-                                 draggable="true" ondragstart="drag(event)"><br>
-                            {{ cell }}
-                        </td>
-
+                        {% for id, value in cell.items() %}
+                            <td><img id="{{ id }}"
+                                     src="{{ url_for("static", filename="medias/john/" + value) }}" height="100px"
+                                     draggable="true" ondragstart="drag(event)"><br>
+                                {{ value }}
+                            </td>
+                        {% endfor %}
                     {% endfor %}
                 </tr>
             {% endfor %}
@@ -54,6 +55,7 @@
     <div class="bottom-container">
         <h2>Workstation</h2>
         <form class="new-flux" method="post">
+            <input type="hidden" name="form" value="new-flux">
             <table>
                 <tr id="time-line-img">
                     <td id="next-img" ondragover="allowDrop(event)" ondrop="drop(event)">
@@ -61,7 +63,6 @@
                 </tr>
                 <tr id="time-line-input">
                     <td class="time-line-input">
-                        <input type="hidden" id="next-in-hide" name="next-in-hide" value="">
                         <input type="number" id="next-in-txt" name="next-in-txt">
                     </td>
                 </tr>
@@ -75,6 +76,7 @@
 
     <div class="form-popup" id="myForm">
         <form class="form-container" method="post" enctype=multipart/form-data>
+            <input type="hidden" name="form" value="new-media">
             <p>{{ form.media }}</p>
             <p>{{ form.upload }}
                 <button type="button" class="cancel" onclick="closeForm()">Close</button>

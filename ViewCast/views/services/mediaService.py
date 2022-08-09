@@ -46,14 +46,15 @@ class MediaService:
         self.medias_repo.session.close()
         return result
 
-    def get_list_medias_name_by_id_user(self, id_user) -> list[str]:
+    def get_list_medias_by_id_user(self, id_user) -> list[str]:
         self.medias_repo.session = Session()
         result = []
         try:
             all_media = self.medias_repo.get_all_filter(Medias.id_users == id_user)
             for _media in all_media:
                 media_model = MediasModel.from_orm(_media)
-                result.append(media_model.name)
+                media_dict = {media_model.id: media_model.name}
+                result.append(media_dict)
         except Exception as ex:
             self.app.logger.error(f"Exception in get_list_medias_name_by_id_user(): {ex.args[0]}")
             result = []
