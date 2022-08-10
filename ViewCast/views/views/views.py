@@ -52,6 +52,8 @@ def workstation():
     if not session.get("name"):
         current_app.logger.warning(f"User not connected")
         return redirect("/login/")
+    if not users_service.check_admin(session.get("id_user")):
+        return redirect("/watch/")
     form = WorkstationForm()
     if request.method == 'POST':
         request_form = check_form(request.form)
