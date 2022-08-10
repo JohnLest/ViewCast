@@ -54,7 +54,7 @@
     </div>
     <div class="bottom-container">
         <h2>Workstation</h2>
-        <form class="new-flux" method="post">
+        <form class="new-flux" method="post" onsubmit="return validate_flux()">
             <input type="hidden" name="form" value="new-flux">
             <table>
                 <tr id="time-line-img">
@@ -68,6 +68,13 @@
                 </tr>
             </table>
             <br>
+            <div id="set-date">
+                <label for="start-date">Start date : </label><br>
+                <input type="datetime-local" id="start-date" name="start-date"><br>
+                <label for="end-date">End date : </label><br>
+                <input type="datetime-local" id="end-date" name="end-date">
+            </div>
+            <div id="error"></div>
             <button class="icon icon-check" style="font-size: 32px;" type="submit">
                 <i class="fa-solid fa-circle-check"></i>
             </button>

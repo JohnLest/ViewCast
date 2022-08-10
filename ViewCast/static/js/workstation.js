@@ -49,3 +49,31 @@ function drop(ev, text) {
     new_cell_in_txt.setAttribute("name", "next-in-txt")
     new_cell_input.appendChild(new_cell_in_txt);
 }
+
+function validate_flux(){
+    let td = document.getElementsByClassName("time-line-input");
+    var error_div = document.getElementById("error");
+    if(td.length <= 1){
+        error_div.innerHTML = "No media in flux";
+        return false;
+    }
+    let start_date = document.getElementById("start-date");
+    let end_date = document.getElementById("end-date");
+    let currentDate = new Date();
+    if(end_date.value){
+        let date= new Date(end_date.value + 'Z');
+        if(date < currentDate.getTime()){
+            error_div.innerHTML = `The end date ${end_date.value} in in the past`;
+            return false;
+        }
+    }
+    if(start_date.value && end_date.value){
+        let start = new Date(start_date.value + 'Z');
+        let end = new Date(end_date.value + 'Z');
+        if(end.getTime() < start.getTime()){
+            error_div.innerHTML = `The start date ${start_date.value} start after the end date ${end_date.value}`;
+            return false;
+        }
+    }
+    return false;
+}

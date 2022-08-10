@@ -66,7 +66,7 @@
     font-family: Montserrat Regular, Arial, Helvetica, sans-serif;
 }
 
-.icon{
+.icon {
     width: 32px;
     height: 32px;
     border: none;
@@ -79,12 +79,11 @@
     right: 52%;
 }
 
-.icon-check{
+.icon-check {
     position: fixed;
-    bottom :2%;
+    bottom: 2%;
     right: 2%;
 }
-
 
 
 .form-popup {
@@ -111,13 +110,26 @@
     right: 55%;
 }
 
-
 td {
     border: 1px solid #0073C9;
     height: 150px;
     width: 200px;
     text-align: center;
 }
-td.time-line-input{
+
+td.time-line-input {
     height: 50px;
+}
+
+#set-date {
+    position: fixed;
+    bottom: 7%;
+    right: 1%;
+}
+
+#error {
+    color: darkred;
+    position: fixed;
+    bottom: 1%;
+    right: 5%;
 }
