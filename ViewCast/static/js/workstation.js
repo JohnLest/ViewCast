@@ -75,5 +75,5 @@ function validate_flux(){
             return false;
         }
     }
-    return false;
+    return true;
 }

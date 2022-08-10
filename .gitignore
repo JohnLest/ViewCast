@@ -10,3 +10,4 @@ ViewCast_project/db.sqlite3
 
 # resources
 /ViewCast/static/medias/*
+ViewCast/flask_session/*

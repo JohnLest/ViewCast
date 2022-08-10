@@ -29,27 +29,50 @@
 {% block content %}
     <div class="split left-container">
         <h2>Library Medias</h2>
-        <table>
-            {% for row in table %}
-                <tr>
-                    {% for cell in row %}
-                        {% for id, value in cell.items() %}
-                            <td><img id="{{ id }}"
-                                     src="{{ url_for("static", filename="medias/john/" + value) }}" height="100px"
-                                     draggable="true" ondragstart="drag(event)"><br>
-                                {{ value }}
-                            </td>
-                        {% endfor %}
+        {% for row in matrice_media %}
+            <div class="row">
+                {% for cell in row %}
+                    {% for id, value in cell.items() %}
+                        <div class="col-2 offset-1 card">
+                            <img id="{{ id }}"
+                                 src="{{ url_for("static", filename="medias/john/" + value) }}"
+                                 draggable="true" ondragstart="drag(event)"
+                                 alt="..." height="100px">
+                            <div class="card-body">
+                                {{ value.rsplit('.')[0] }}
+                            </div>
+                        </div>
                     {% endfor %}
-                </tr>
-            {% endfor %}
-        </table>
+                {% endfor %}
+            </div><br>
+        {% endfor %}
         <button class="icon icon-add" style="font-size: 32px;" onclick="openForm()">
             <i class="fa-solid fa-circle-plus icon-add"></i>
         </button>
     </div>
     <div class="split right-container">
-        <h2>right-container</h2>
+        <h2>Flux</h2>
+        {% for row in matrice_flux %}
+            <div class="row">
+                {% for flux in row %}
+                    <div class="col-4 offset-1 card">
+                        <img id="{{ flux.url }}"
+                             src="{{ url_for("static", filename="medias/john/" + flux.cover) }}"
+                             alt="...">
+                        <div class="card-body">
+                            <b>Code: </b><br>
+                            {{ flux.url }}<br>
+                            <b>Start date :</b><br>
+                            {{ flux.start_date }}<br>
+                            <b>End Date</b><br>
+                            {{ flux.end_date }}<br>
+                            <a href="/watch/{{ flux.url }}" class="btn btn-primary">Preview</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div><br>
+        {% endfor %}
+
         <!-- TODO doucle pour chaque difusion  -->
     </div>
     <div class="bottom-container">
