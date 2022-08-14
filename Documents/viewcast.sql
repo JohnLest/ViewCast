@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: Jul 18, 2022 at 04:41 PM
+-- Generation Time: Aug 14, 2022 at 10:07 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.3.21
 
@@ -31,9 +31,14 @@ DROP TABLE IF EXISTS `flux`;
 CREATE TABLE IF NOT EXISTS `flux` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `url` varchar(255) NOT NULL,
+  `start_date` datetime DEFAULT NULL,
+  `end_date` datetime DEFAULT NULL,
+  `id_users` bigint(20) UNSIGNED DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `url` (`url`)
+  UNIQUE KEY `url` (`url`),
+  KEY `user_exist_flux` (`id_users`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 -- --------------------------------------------------------
 
@@ -49,8 +54,8 @@ CREATE TABLE IF NOT EXISTS `flux_data` (
   `id_flux` bigint(20) UNSIGNED NOT NULL,
   `id_media` bigint(20) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `flux_exist` (`id_flux`),
-  KEY `media_exist` (`id_media`)
+  KEY `flux_exist_data` (`id_flux`),
+  KEY `media_exist_data` (`id_media`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -66,9 +71,10 @@ CREATE TABLE IF NOT EXISTS `medias` (
   `id_users` bigint(20) UNSIGNED NOT NULL,
   `id_media_type` tinyint(3) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_exist` (`id_users`),
-  KEY `media_type_exist` (`id_media_type`)
+  KEY `user_exist_medias` (`id_users`),
+  KEY `media_type_exist_medias` (`id_media_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 -- --------------------------------------------------------
 
@@ -82,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `media_type` (
   `type` varchar(5) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `type` (`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `media_type`
@@ -93,6 +99,18 @@ INSERT INTO `media_type` (`id`, `type`) VALUES
 (3, 'jpeg'),
 (2, 'jpg'),
 (1, 'png');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `super-users`
+--
+
+DROP TABLE IF EXISTS `super-users`;
+CREATE TABLE IF NOT EXISTS `super-users` (
+  `id_users` bigint(20) UNSIGNED NOT NULL,
+  PRIMARY KEY `user_exist_su` (`id_users`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -109,30 +127,67 @@ CREATE TABLE IF NOT EXISTS `users` (
   `company` varchar(25) NOT NULL,
   `location` varchar(25) DEFAULT NULL,
   `is_admin` tinyint(1) NOT NULL DEFAULT 0,
-  `path_media` varchar(25) NOT NULL
+  `path_media` varchar(25) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
-  UNIQUE KEY `mail` (`mail`),
+  UNIQUE KEY `name` (`name`,`mail`),
   UNIQUE KEY `path_media` (`path_media`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `v_flux`
+-- (See below for the actual view)
+--
+DROP VIEW IF EXISTS `v_flux`;
+CREATE TABLE IF NOT EXISTS `v_flux` (
+`url` varchar(255)
+,`media` varchar(15)
+,`position` tinyint(3) unsigned
+,`time` tinyint(3) unsigned
+);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `v_flux`
+--
+DROP TABLE IF EXISTS `v_flux`;
+
+DROP VIEW IF EXISTS `v_flux`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`127.0.0.1` SQL SECURITY DEFINER VIEW `v_flux`  AS  select `f`.`url` AS `url`,`m`.`name` AS `media`,`fd`.`position` AS `position`,`fd`.`time` AS `time` from ((`flux` `f` join `flux_data` `fd` on(`f`.`id` = `fd`.`id_flux`)) join `medias` `m` on(`fd`.`id_media` = `m`.`id`)) ;
 
 --
 -- Constraints for dumped tables
 --
 
 --
+-- Constraints for table `flux`
+--
+ALTER TABLE `flux`
+  ADD CONSTRAINT `user_exist_flux` FOREIGN KEY (`id_users`) REFERENCES `users` (`id`);
+COMMIT;
+
+--
 -- Constraints for table `flux_data`
 --
 ALTER TABLE `flux_data`
-  ADD CONSTRAINT `flux_exist` FOREIGN KEY (`id_flux`) REFERENCES `flux` (`id`),
-  ADD CONSTRAINT `media_exist` FOREIGN KEY (`id_media`) REFERENCES `medias` (`id`);
+  ADD CONSTRAINT `flux_exist_data` FOREIGN KEY (`id_flux`) REFERENCES `flux` (`id`),
+  ADD CONSTRAINT `media_exist_data` FOREIGN KEY (`id_media`) REFERENCES `medias` (`id`);
 
 --
 -- Constraints for table `medias`
 --
 ALTER TABLE `medias`
-  ADD CONSTRAINT `media_type_exist` FOREIGN KEY (`id_media_type`) REFERENCES `media_type` (`id`),
-  ADD CONSTRAINT `user_exist` FOREIGN KEY (`id_users`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `media_type_exist_medias` FOREIGN KEY (`id_media_type`) REFERENCES `media_type` (`id`),
+  ADD CONSTRAINT `user_exist_medias` FOREIGN KEY (`id_users`) REFERENCES `users` (`id`);
+COMMIT;
+
+--
+-- Constraints for table `super_users`
+--
+ALTER TABLE `super-users`
+  ADD CONSTRAINT `user_exist_su` FOREIGN KEY (`id_users`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
