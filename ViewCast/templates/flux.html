@@ -22,7 +22,7 @@
         <img id="visible" alt="" class="slide"
              src="">
         {% for img in flux %}
-            <script>create_image("{{ url_for("static", filename="medias/john/" + img.media) }}", {{ img.position }}, {{ img.time }})</script>
+            <script>create_image("{{ url_for("static", filename="medias" + path + "/" + img.media) }}", {{ img.position }}, {{ img.time }})</script>
         {% endfor %}
     </div>
     <script>slide()</script>

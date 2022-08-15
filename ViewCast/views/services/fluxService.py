@@ -13,13 +13,14 @@ from models.database.v_flux import VFlux
 from models.repos.v_fluxRepo import VFluxRepo
 from models.models.v_fluxModel import VFluxModel
 
+
 class FluxService:
     def __init__(self, app):
         _session = Session()
         self.app = app
         self.flux_repo = FluxRepo(_session, Flux)
         self.flux_data_repo = FluxDataRepo(_session, FluxData)
-        self.v_flux_repo= VFluxRepo(_session, VFlux)
+        self.v_flux_repo = VFluxRepo(_session, VFlux)
 
     def create_new_flux(self, flux_data, start_date, end_date, id_user):
         self.flux_repo.session = Session()
@@ -85,24 +86,29 @@ class FluxService:
         self.flux_repo.session.close()
         return result
 
-    def check_available_flux(self, code):
+    def check_available_flux(self, code) -> int:
         self.flux_repo.session = Session()
-        result = False
+        result = -1
         now = datetime.now()
         try:
             flux_model: FluxModel = FluxModel.from_orm(self.flux_repo.get_first(Flux.url == code))
             start_date = flux_model.start_date
             end_date = flux_model.end_date
             if start_date is not None and end_date is not None:
-                result = (start_date < now < end_date)
+                if start_date < now < end_date:
+                    result = flux_model.id_users
+            elif start_date is None and end_date is None:
+                result = flux_model.id_users
             elif start_date is not None:
-                result = start_date < now
+                if start_date < now:
+                    result = flux_model.id_users
             elif end_date is not None:
-                result = end_date > now
+                if end_date > now:
+                    result = flux_model.id_users
 
         except Exception as ex:
             self.app.logger.error(f"Exception in check_available_flux(): {ex.args[0]}")
-            result = False
+            result = -1
             self.flux_repo.session.rollback()
         self.flux_repo.session.close()
         return result

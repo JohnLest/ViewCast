@@ -43,6 +43,7 @@ def login():
             return render_template("login.html", form=form)
         session["name"] = user.name
         session["id_user"] = user.id_user
+        session["path_media"] = user.path_media
         return redirect("/workstation/")
     return render_template("login.html", form=form)
 
@@ -71,7 +72,8 @@ def workstation():
                            form=form,
                            name=session.get("name"),
                            matrice_media=matrice_media,
-                           matrice_flux=matrice_flux)
+                           matrice_flux=matrice_flux,
+                           path=session.get("path_media"))
 
 
 @app.route('/watch/', methods=['GET', 'POST'])
@@ -81,14 +83,16 @@ def watch(code=None):
     if session.get("name"):
         if code is not None:
             flux = flux_service.get_flux_by_url(code)
-            return render_template("flux.html", flux=flux)
+            return render_template("flux.html", flux=flux, path=session.get("path_media"))
         if request.method == "POST":
-            if not flux_service.check_available_flux(form.code.data):
+            id_user = flux_service.check_available_flux(form.code.data)
+            if id_user < 0:
                 msg = f"No flux available with code {form.code.data}"
                 current_app.logger.warning(msg)
                 return render_template("login_flux.html", form=form, msg=msg, log=True)
+            path = users_service.get_path_media_by_id_user(id_user)
             flux = flux_service.get_flux_by_url(form.code.data)
-            return render_template("flux.html", flux=flux)
+            return render_template("flux.html", flux=flux, path=path)
         return render_template("login_flux.html", form=form, log=True)
     else:
         if request.method == "POST":
@@ -124,6 +128,9 @@ def check_form(form):
 
 def add_media():
     current_app.logger.info(f"Add media")
+    full_path = current_app.config['UPLOAD_FOLDER'] + session.get("path_media")
+    if not os.path.exists(full_path):
+        os.makedirs(full_path)
     if 'media' not in request.files:
         return
     media = request.files['media']
@@ -131,8 +138,8 @@ def add_media():
         return
     if media and allowed_file(media.filename):
         filename = secure_filename(media.filename)
-        media.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-        _new_media = media_service.new_media(media.filename, filename.rsplit('.', 1)[1].lower(), 1)
+        media.save(os.path.join(full_path, filename))
+        _new_media = media_service.new_media(media.filename, filename.rsplit('.', 1)[1].lower(), session.get("id_user"))
         if _new_media is None:
             current_app.logger.warning(f"Error update with {filename}")
 

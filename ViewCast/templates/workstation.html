@@ -35,7 +35,7 @@
                     {% for id, value in cell.items() %}
                         <div class="col-2 offset-1 card">
                             <img id="{{ id }}"
-                                 src="{{ url_for("static", filename="medias/john/" + value) }}"
+                                 src="{{ url_for("static", filename="medias" + path + "/" + value) }}"
                                  draggable="true" ondragstart="drag(event)"
                                  alt="..." height="100px">
                             <div class="card-body">

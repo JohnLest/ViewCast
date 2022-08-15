@@ -36,3 +36,16 @@ class UsersService:
             self.__users_repo.session.rollback()
         self.__users_repo.session.close()
         return result
+
+    def get_path_media_by_id_user(self, id_user):
+        self.__users_repo.session = Session()
+        result = None
+        try:
+            user_model: UsersModel = UsersModel.from_orm(self.__users_repo.get_by_id(id_user))
+            result = user_model.path_media
+        except Exception as ex:
+            self.__app.logger.error(f"Exception in get_path_media_by_id_user(): {ex.args[0]}")
+            result = None
+            self.__users_repo.session.rollback()
+        self.__users_repo.session.close()
+        return result

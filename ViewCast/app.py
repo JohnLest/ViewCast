@@ -4,7 +4,7 @@ from flask_session import Session
 from logging.config import dictConfig
 from views.views.views import app as route
 
-UPLOAD_FOLDER = 'E:\\Python\\viewcast\\ViewCast\\static\\medias\\john'
+UPLOAD_FOLDER = 'E:\\Python\\viewcast\\ViewCast\\static\\medias'
 
 dictConfig({
     'version': 1,
