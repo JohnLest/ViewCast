@@ -1,0 +1,13 @@
+# PyCharm module
+/ViewCast/.idea/
+/ViewCast/venv/
+
+
+ViewCast_project/db.sqlite3
+
+# __pycache__
+*.pyc
+
+# resources
+/ViewCast/static/medias/*
+ViewCast/flask_session/*

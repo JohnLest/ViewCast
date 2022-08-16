@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block stylesheet %}
+    <script type="text/javascript" src="{{ url_for("static", filename="js/flux.js") }}"></script>
+{% endblock %}
+{% block title %}
+    - flux
+{% endblock %}
+{% block header %}{% endblock %}
+{% block content %}
+    <style>
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: inline-block;
+            overflow: hidden;
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+    <div id="slide" class="container">
+        <img id="visible" alt="" class="slide"
+             src="">
+        {% for img in flux %}
+            <script>create_image("{{ url_for("static", filename="medias" + path + "/" + img.media) }}", {{ img.position }}, {{ img.time }})</script>
+        {% endfor %}
+    </div>
+    <script>slide()</script>
+{% endblock %}

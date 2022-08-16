@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kit.fontawesome.com/0b9e55f2c3.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for("static", filename="bootstrap/css/bootstrap.min.css") }}" />
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/base.css") }}" />
+    {% block stylesheet %}{% endblock %}
+    <title>Viewcast {% block title %}{% endblock %}</title>
+</head>
+<body>
+    {% block header %}
+    <header class="header-main">
+        <p>
+            <img src="{{ url_for("static", filename="resources/viewcast_white.png") }}" style="height:90px; margin-top: 25px;"/>
+        </p>
+    </header>
+    {% endblock %}
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/workstation.css") }}"/>
+    <script type="text/javascript" src="{{ url_for("static", filename="js/workstation.js") }}"></script>
+{% endblock %}
+{% block title %}
+    - Workstation - {{ name }}
+{% endblock %}
+{% block header %}
+    <header class="header-workstation">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand">
+                    <img src="{{ url_for("static", filename="resources/viewcast_white.png") }}"
+                         style="height:40px; margin-top: 10px;"/></a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    </ul>
+                    </li>
+                    </ul>
+                    <form class="d-flex">
+                        <button class="logout" type="submit">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+{% endblock %}
+{% block content %}
+    <div class="split left-container">
+        <h2>Library Medias</h2>
+        {% for row in matrice_media %}
+            <div class="row">
+                {% for cell in row %}
+                    {% for id, value in cell.items() %}
+                        <div class="col-2 offset-1 card">
+                            <img id="{{ id }}"
+                                 src="{{ url_for("static", filename="medias" + path + "/" + value) }}"
+                                 draggable="true" ondragstart="drag(event)"
+                                 alt="..." height="100px">
+                            <div class="card-body">
+                                {{ value.rsplit('.')[0] }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div><br>
+        {% endfor %}
+        <button class="icon icon-add" style="font-size: 32px;" onclick="openForm()">
+            <i class="fa-solid fa-circle-plus icon-add"></i>
+        </button>
+    </div>
+    <div class="split right-container">
+        <h2>Flux</h2>
+        {% for row in matrice_flux %}
+            <div class="row">
+                {% for flux in row %}
+                    <div class="col-4 offset-1 card">
+                        <img id="{{ flux.url }}"
+                             src="{{ url_for("static", filename="medias/john/" + flux.cover) }}"
+                             alt="...">
+                        <div class="card-body">
+                            <b>Code: </b><br>
+                            {{ flux.url }}<br>
+                            <b>Start date :</b><br>
+                            {{ flux.start_date }}<br>
+                            <b>End Date</b><br>
+                            {{ flux.end_date }}<br>
+                            <a href="/watch/{{ flux.url }}" class="btn btn-primary">Preview</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div><br>
+        {% endfor %}
+
+        <!-- TODO doucle pour chaque difusion  -->
+    </div>
+    <div class="bottom-container">
+        <h2>Workstation</h2>
+        <form class="new-flux" method="post" onsubmit="return validate_flux()">
+            <input type="hidden" name="form" value="new-flux">
+            <table>
+                <tr id="time-line-img">
+                    <td id="next-img" ondragover="allowDrop(event)" ondrop="drop(event)">
+                    </td>
+                </tr>
+                <tr id="time-line-input">
+                    <td class="time-line-input">
+                        <input type="number" id="next-in-txt" name="next-in-txt">
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <div id="set-date">
+                <label for="start-date">Start date : </label><br>
+                <input type="datetime-local" id="start-date" name="start-date"><br>
+                <label for="end-date">End date : </label><br>
+                <input type="datetime-local" id="end-date" name="end-date">
+            </div>
+            <div id="error"></div>
+            <button class="icon icon-check" style="font-size: 32px;" type="submit">
+                <i class="fa-solid fa-circle-check"></i>
+            </button>
+        </form>
+    </div>
+
+    <div class="form-popup" id="myForm">
+        <form class="form-container" method="post" enctype=multipart/form-data>
+            <input type="hidden" name="form" value="new-media">
+            <p>{{ form.media }}</p>
+            <p>{{ form.upload }}
+                <button type="button" class="cancel" onclick="closeForm()">Close</button>
+            </p>
+        </form>
+    </div>
+
+{% endblock %}

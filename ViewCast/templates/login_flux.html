@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/login_flux.css") }}"/>
+{% endblock %}
+{% block title %}
+    - flux
+{% endblock %}
+{% block content %}
+    <div class="card">
+        <form method="post" action="/watch">
+            <div class="container">
+                <h3><b>Please log in and choose the screen to display by inserting its broadcast code</b></h3>
+                {% if not log %}
+                    <b>{{ form.email.label }} : </b>
+                    {{ form.email }}
+                    <br>
+                    <br>
+                    <b>{{ form.psw.label }}: </b>
+                    {{ form.psw }}
+                    <br>
+                    <br>
+                {% endif %}
+                <b>{{ form.code.label }}: </b>
+                {{ form.code }}
+                <br>
+                <br>
+                {{ form.submit }}
+                <br>
+                <br>
+                <div class="error">
+                    <h3>{{ msg }}</h3>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
